@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cws0xsaewmwyg" path="res://scripts/Bow.gd" id="1_prjx1"]
 [ext_resource type="Script" uid="uid://b27shn4y6ypn8" path="res://scripts/BowString.gd" id="1_vt0lb"]
 [ext_resource type="PackedScene" uid="uid://cxl1juoutkjjv" path="res://scenes/arrow.tscn" id="2_rivji"]
+[ext_resource type="Script" uid="uid://cjo67xnbw1v3v" path="res://scenes/Trajectory.gd" id="4_atxj4"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_2of8d"]
 top_radius = 0.03
@@ -19,7 +20,7 @@ size = Vector3(0.05, 0.4, 0.03)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prjx1"]
 albedo_color = Color(0.16062862, 0.16062862, 0.16062862, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_rivji"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_atxj4"]
 _surfaces = [{
 "aabb": AABB(-0.01, -0.9071497, -0.010908639, 0.02, 1.8101739, 0.021573614),
 "attribute_data": PackedByteArray("AAAAAAAAAAAAAIA+AAAAAAAAAD8AAAAAAABAPwAAAAAAAAAAAAAAPwAAgD4AAAA/AAAAPwAAAD8AAEA/AAAAPwAAAAAAAIA/AACAPgAAgD8AAAA/AACAPwAAQD8AAIA/"),
@@ -38,6 +39,11 @@ albedo_color = Color(0.8101393, 0.59428984, 0.4663679, 1)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vt0lb"]
 height = 1.0
 radius = 0.04
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atxj4"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.85490197, 0.85490197, 0, 0.73333335)
 
 [node name="Bow" type="Node3D" unique_id=1409793744 node_paths=PackedStringArray("pivot_top1", "pivot_top2", "pivot_bottom1", "pivot_bottom2", "bow_string", "bow_arrow")]
 script = ExtResource("1_prjx1")
@@ -103,7 +109,7 @@ bottom_tip = NodePath("../handle/bottom_pivot/arm_bottom/bottom_pivot2/arm_botto
 max_pull = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="string" unique_id=789673664]
-mesh = SubResource("ArrayMesh_rivji")
+mesh = SubResource("ArrayMesh_atxj4")
 surface_material_override/0 = SubResource("StandardMaterial3D_rivji")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="string" unique_id=214696403]
@@ -117,5 +123,13 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0
 freeze = true
 monitoring = false
 
+[node name="trajectory" type="MeshInstance3D" parent="." unique_id=790847703]
+material_override = SubResource("StandardMaterial3D_atxj4")
+script = ExtResource("4_atxj4")
+sides = 4
+max_distance = 200.0
+
+[connection signal="set_trajectory" from="." to="trajectory" method="update_trajectory"]
 [connection signal="pull" from="string" to="." method="_on_string_pull"]
 [connection signal="release" from="string" to="." method="_on_string_release"]
+[connection signal="release" from="string" to="trajectory" method="hide_trajectory"]

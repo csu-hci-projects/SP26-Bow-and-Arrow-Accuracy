@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bu61l8enx40sw" path="res://scenes/function_hold.tscn" id="2_lnt0p"]
 [ext_resource type="PackedScene" uid="uid://bkdeegb8w3oah" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_physics_fullglove_low.tscn" id="2_ojcpv"]
 [ext_resource type="PackedScene" uid="uid://bq8dx8nmmgpvl" path="res://scenes/bow.tscn" id="3_0t3sa"]
+[ext_resource type="Script" uid="uid://ctcvof4p7qlq5" path="res://scenes/TestFire.gd" id="4_j2fxx"]
 [ext_resource type="PackedScene" uid="uid://dm0gxqi7g051p" path="res://scenes/function_pull.tscn" id="5_j2fxx"]
 
 [node name="Player" type="XROrigin3D" unique_id=95447385]
@@ -20,6 +21,13 @@ show_when_tracked = true
 [node name="FunctionHold" parent="LeftHand/LeftPhysicsHand" unique_id=1091775822 instance=ExtResource("2_lnt0p")]
 
 [node name="Bow" parent="LeftHand" unique_id=1409793744 instance=ExtResource("3_0t3sa")]
+
+[node name="TestFire" type="Node3D" parent="LeftHand" unique_id=338630156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0.2)
+script = ExtResource("4_j2fxx")
+enabled = false
+start_position = Vector3(0, 0, 0.2)
+end_position = Vector3(0, -0.4, 1.2)
 
 [node name="RightHand" type="XRController3D" parent="." unique_id=1583282118]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)

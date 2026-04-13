@@ -12,6 +12,8 @@ extends Node3D
 @export var bow_string: BowString
 @export var bow_arrow: Node3D
 
+signal set_trajectory(launch_velocity: Vector3)
+
 func _process(delta: float) -> void:
 	if bow_string.target:
 		bow_arrow.visible = true
@@ -29,12 +31,13 @@ func shoot(velocity: float):
 
 func _on_string_pull(distance: float) -> void:
 	var bend_angle = distance * pivot_strength
-
 	pivot_top1.rotation.x = bend_angle
 	pivot_top2.rotation.x = bend_angle
-
 	pivot_bottom1.rotation.x = -bend_angle
 	pivot_bottom2.rotation.x = -bend_angle
+
+	var velocity: Vector3 = -bow_arrow.global_transform.basis.z * (bow_string.get_pull_distance_clamped() * max_velocity)
+	set_trajectory.emit(velocity)
 
 
 func _on_string_release(power: float) -> void:

@@ -102,8 +102,12 @@ func on_grabbed(_target: Node3D):
 
 
 func on_released(_target: Node3D):
-	release.emit(clamp(get_pull_distance() / max_pull, 0, 1))
+	release.emit(get_pull_distance_clamped())
 	target = null
+
+
+func get_pull_distance_clamped() -> float:
+	return clamp(get_pull_distance() / max_pull, 0, 1)
 
 
 func get_pull_distance() -> float:
