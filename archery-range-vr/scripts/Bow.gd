@@ -12,7 +12,7 @@ extends Node3D
 @export var bow_string: BowString
 @export var bow_arrow: Node3D
 
-signal set_trajectory(launch_velocity: Vector3)
+signal set_trajectory(launch_position: Vector3, launch_velocity: Vector3)
 
 func _process(delta: float) -> void:
 	if bow_string.target:
@@ -22,22 +22,22 @@ func _process(delta: float) -> void:
 	else:
 		bow_arrow.visible = false
 
-func shoot(velocity: float):
+func shoot(power: float):
 	var arrow_instance := arrow.instantiate() as RigidBody3D
 	get_tree().root.add_child(arrow_instance)
 	arrow_instance.global_transform = bow_arrow.global_transform
-	arrow_instance.linear_velocity = -bow_arrow.global_transform.basis.z * velocity
+	arrow_instance.linear_velocity = -bow_arrow.global_transform.basis.z * power
 
 
-func _on_string_pull(distance: float) -> void:
+func _on_string_pull(distance: float, power: float) -> void:
 	var bend_angle = distance * pivot_strength
 	pivot_top1.rotation.x = bend_angle
 	pivot_top2.rotation.x = bend_angle
 	pivot_bottom1.rotation.x = -bend_angle
 	pivot_bottom2.rotation.x = -bend_angle
 
-	var velocity: Vector3 = -bow_arrow.global_transform.basis.z * (bow_string.get_pull_distance_clamped() * max_velocity)
-	set_trajectory.emit(velocity)
+	var velocity: Vector3 = -bow_arrow.global_transform.basis.z * power * max_velocity
+	set_trajectory.emit(bow_arrow.global_position, velocity)
 
 
 func _on_string_release(power: float) -> void:

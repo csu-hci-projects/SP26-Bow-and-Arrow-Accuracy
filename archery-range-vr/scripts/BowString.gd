@@ -19,7 +19,7 @@ extends Area3D
 var _array_mesh: ArrayMesh
 var _arrays: Array
 
-signal pull(distance: float)
+signal pull(distance: float, power: float)
 signal release(power: float)
 
 func _ready() -> void:
@@ -30,7 +30,7 @@ func _process(_delta: float) -> void:
 		_update_vertices()
 		
 	if target:
-		pull.emit(clamp(get_pull_distance() / max_pull, 0, 1))
+		pull.emit(clamp(get_pull_distance() / max_pull, 0, 1), get_pull_distance_clamped())
 
 func _rebuild() -> void:
 	if not top_tip or not bottom_tip or not is_inside_tree():

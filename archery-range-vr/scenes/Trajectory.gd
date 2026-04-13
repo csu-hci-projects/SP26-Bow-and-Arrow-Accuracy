@@ -1,3 +1,4 @@
+@tool
 extends MeshInstance3D
 
 ## Trajectory arc tube mesh.
@@ -6,24 +7,25 @@ extends MeshInstance3D
 @export var radius       : float   = 0.03
 @export var rings        : int     = 32    # segments along the arc
 @export var sides        : int     = 6     # vertices per cross-section ring
-@export var gravity      : float   = 9.8
 @export var max_distance : float   = 20.0  # clip arc at this world distance
 
 var _array_mesh : ArrayMesh
 var _arrays     : Array
-var _launch_pos : Vector3 = Vector3.ZERO
-var _launch_vel : Vector3 = Vector3.ZERO  # world-space m/s
+var _launch_position : Vector3 = Vector3.ZERO
+var _launch_velocity : Vector3 = Vector3.ZERO
 
 # ── public API ────────────────────────────────────────────────────
 
 ## Call this from BowString when the player pulls and releases preview.
-func update_trajectory(launch_velocity: Vector3) -> void:
-	_launch_vel = launch_velocity
+func update_trajectory(launch_position: Vector3, launch_velocity: Vector3) -> void:
+	_launch_velocity = launch_velocity
+	_launch_position = launch_position
 	_rebuild()
 
 ## Hide the arc (arrow has landed / was fired).
 func hide_trajectory(power: float) -> void:
-	visible = false
+	#visible = false
+	pass
 
 # ── lifecycle ─────────────────────────────────────────────────────
 
@@ -59,13 +61,15 @@ func _init_mesh() -> void:
 				base + s1,     base + sides + s1, base + sides + s
 			])
 
-	_arrays[Mesh.ARRAY_VERTEX]  = PackedVector3Array(); _arrays[Mesh.ARRAY_VERTEX].resize(vert_count)
-	_arrays[Mesh.ARRAY_NORMAL]   = PackedVector3Array(); _arrays[Mesh.ARRAY_NORMAL].resize(vert_count)
-	_arrays[Mesh.ARRAY_TEX_UV]   = uvs
-	_arrays[Mesh.ARRAY_INDEX]    = idxs
+	_arrays[Mesh.ARRAY_VERTEX] = PackedVector3Array(); 
+	_arrays[Mesh.ARRAY_VERTEX].resize(vert_count)
+	_arrays[Mesh.ARRAY_NORMAL] = PackedVector3Array(); 
+	_arrays[Mesh.ARRAY_NORMAL].resize(vert_count)
+	_arrays[Mesh.ARRAY_TEX_UV] = uvs
+	_arrays[Mesh.ARRAY_INDEX] = idxs
 
 func _rebuild() -> void:
-	if not is_inside_tree() or _launch_vel.length_squared() < 0.001:
+	if not is_inside_tree() or _launch_velocity.length_squared() < 0.001:
 		visible = false
 		return
 	visible = true
@@ -77,10 +81,9 @@ func _rebuild() -> void:
 
 
 func _update_vertices() -> void:
-	var verts  := _arrays[Mesh.ARRAY_VERTEX]  as PackedVector3Array
-	var norms  := _arrays[Mesh.ARRAY_NORMAL]   as PackedVector3Array
+	var verts := _arrays[Mesh.ARRAY_VERTEX] as PackedVector3Array
+	var norms := _arrays[Mesh.ARRAY_NORMAL] as PackedVector3Array
 
-	# Sample the parabolic arc; stop early if it hits y == launch_pos.y (ground).
 	var points := _sample_arc()
 
 	for ring in rings:
@@ -101,16 +104,31 @@ func _update_vertices() -> void:
 
 func _sample_arc() -> Array[Vector3]:
 	var points: Array[Vector3] = []
-	var vy: float = _launch_vel.y
-	var horiz_speed: float = Vector3(_launch_vel.x, 0, _launch_vel.z).length()
-	var dist_time: float = max_distance / max(horiz_speed, 0.001)
-	var flight_time: float = (2.0 * vy / gravity) if vy > 0.001 else dist_time
-	var total_time: float = min(flight_time, dist_time)
-	for i in rings:
-		var t: float = (float(i) / (rings - 1)) * total_time
-		var world_p: Vector3 = _launch_vel * t + Vector3(0, -0.5 * gravity * t * t, 0)
-		points.append(world_p)
+	
+	var g = -ProjectSettings.get_setting("physics/3d/default_gravity")
+	var tstep: float = 0.05
+	var vel = _launch_velocity
+	var line_start := _launch_position
+	var line_end := _launch_position
+	points.append(to_local(line_start))
+	
+	for i in range(1,rings):
+		vel.y += g * tstep
+		line_end = line_start
+		line_end += vel*tstep
+		
+		line_start = line_end
+		points.append(to_local(line_start))
+	
 	return points
+
+
+func raycast_query(pointA: Vector3, pointB: Vector3) -> Dictionary:
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(pointA, pointB, 1 << 0)
+	query.hit_from_inside = false
+	var result = space_state.intersect_ray(query)
+	return result
 
 
 func _fill_ring(verts: PackedVector3Array, norms: PackedVector3Array, offset: int, center: Vector3, forward: Vector3) -> void:

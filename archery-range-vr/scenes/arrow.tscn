@@ -40,6 +40,7 @@ emission_energy_multiplier = 2.0
 
 [node name="Arrow" type="RigidBody3D" unique_id=238849741 node_paths=PackedStringArray("visuals", "collision")]
 collision_layer = 2
+continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_umosx")

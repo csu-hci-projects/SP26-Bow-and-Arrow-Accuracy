@@ -31,6 +31,33 @@ sky_material = SubResource("ProceduralSkyMaterial_e2o6t")
 background_mode = 2
 sky = SubResource("Sky_feb5d")
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_p57ef"]
+size = Vector2(1.1, 2.15)
+orientation = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_iywne"]
+size = Vector2(1, 1)
+orientation = 2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_p57ef"]
+viewport_path = NodePath("SubViewport2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gee14"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_p57ef")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_iywne"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p57ef"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_iywne")
+
 [node name="Game" type="Node3D" unique_id=416378783]
 
 [node name="Player" parent="." unique_id=95447385 instance=ExtResource("1_e2o6t")]
@@ -51,6 +78,7 @@ surface_material_override/0 = ExtResource("2_lbhrr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="environment/StaticBody3D" unique_id=539143863]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
 shape = SubResource("BoxShape3D_lbhrr")
 
 [node name="wall" type="MeshInstance3D" parent="environment" unique_id=1654302514]
@@ -94,3 +122,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2377527, 1.1850106, -25.626
 
 [node name="target3" parent="targets" unique_id=1569391443 instance=ExtResource("5_iywne")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24050736, 1.185011, -40.654926)
+
+[node name="TV" type="MeshInstance3D" parent="." unique_id=185198399]
+transform = Transform3D(0.8654226, 0, -0.50104254, 0, 1, 0, 0.50104254, 0, 0.8654226, 2.140409, 1.1117786, -2.4922578)
+mesh = SubResource("PlaneMesh_p57ef")
+surface_material_override/0 = SubResource("StandardMaterial3D_u5sy4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TV" unique_id=2106047678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525, 0.02)
+mesh = SubResource("PlaneMesh_iywne")
+surface_material_override/0 = SubResource("StandardMaterial3D_gee14")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TV" unique_id=1915564431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.525, 0.02)
+mesh = SubResource("PlaneMesh_iywne")
+surface_material_override/0 = SubResource("StandardMaterial3D_p57ef")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=821285863]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=561237681]
+transform = Transform3D(0.9274582, -0.053817198, 0.37003374, -3.7252903e-09, 0.9895887, 0.14392443, -0.37392682, -0.13348389, 0.91780216, 1.5409952, 1.7421585, -36.63898)
+
+[node name="SubViewport2" type="SubViewport" parent="." unique_id=121930983]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport2" unique_id=1637560186]
+transform = Transform3D(0.93166304, -0.05381719, -0.35931534, 0.097863734, 0.9895887, 0.10553164, 0.349895, -0.13348389, 0.92723, 1.005135, 1.6660111, -22.710428)

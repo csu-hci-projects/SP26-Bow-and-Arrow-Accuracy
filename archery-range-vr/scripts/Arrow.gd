@@ -7,7 +7,7 @@ extends RigidBody3D
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if monitoring:
 		if linear_velocity.length() > 0.1:
 			visuals.look_at(global_position + linear_velocity, Vector3.UP)

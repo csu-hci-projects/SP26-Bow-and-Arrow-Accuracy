@@ -36,7 +36,7 @@ func _on_w_pressed() -> void:
 	_holding = true
 
 func _on_w_released() -> void:
+	bow_string.on_released(self)
 	_holding = false
 	_pull_t = 0.0
 	position = start_position
-	bow_string.on_released(self)
