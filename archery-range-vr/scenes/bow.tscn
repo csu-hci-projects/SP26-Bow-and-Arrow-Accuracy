@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cws0xsaewmwyg" path="res://scripts/Bow.gd" id="1_prjx1"]
 [ext_resource type="Script" uid="uid://b27shn4y6ypn8" path="res://scripts/BowString.gd" id="1_vt0lb"]
 [ext_resource type="PackedScene" uid="uid://cxl1juoutkjjv" path="res://scenes/arrow.tscn" id="2_rivji"]
-[ext_resource type="Script" uid="uid://cjo67xnbw1v3v" path="res://scenes/Trajectory.gd" id="4_atxj4"]
+[ext_resource type="Script" uid="uid://cjo67xnbw1v3v" path="res://scripts/Trajectory.gd" id="4_atxj4"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_2of8d"]
 top_radius = 0.03
@@ -48,7 +48,7 @@ albedo_color = Color(0.85490197, 0.85490197, 0, 0.73333335)
 [node name="Bow" type="Node3D" unique_id=1409793744 node_paths=PackedStringArray("pivot_top1", "pivot_top2", "pivot_bottom1", "pivot_bottom2", "bow_string", "bow_arrow")]
 script = ExtResource("1_prjx1")
 arrow = ExtResource("2_rivji")
-max_velocity = 80.0
+max_velocity = 150.0
 pivot_strength = 0.5
 pivot_top1 = NodePath("handle/top_pivot")
 pivot_top2 = NodePath("handle/top_pivot/arm_top/top_pivot2")
@@ -106,7 +106,7 @@ script = ExtResource("1_vt0lb")
 mesh_instance = NodePath("MeshInstance3D")
 top_tip = NodePath("../handle/top_pivot/arm_top/top_pivot2/arm_top2/tip")
 bottom_tip = NodePath("../handle/bottom_pivot/arm_bottom/bottom_pivot2/arm_bottom2/tip")
-max_pull = 1.0
+max_pull = 0.8
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="string" unique_id=789673664]
 mesh = SubResource("ArrayMesh_atxj4")
@@ -130,6 +130,7 @@ rings = 64
 sides = 4
 max_distance = 100.0
 
+[connection signal="enable_trajectory" from="." to="trajectory" method="_on_bow_enable_trajectory"]
 [connection signal="set_trajectory" from="." to="trajectory" method="update_trajectory"]
 [connection signal="pull" from="string" to="." method="_on_string_pull"]
 [connection signal="release" from="string" to="." method="_on_string_release"]

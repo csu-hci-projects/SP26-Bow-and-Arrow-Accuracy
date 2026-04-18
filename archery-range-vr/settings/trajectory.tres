@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BowSettingItem" format=3 uid="uid://cn1nyijn116c1"]
+
+[ext_resource type="Script" uid="uid://bmp2d6enkshks" path="res://scripts/BowSettingItem.gd" id="1_e5eqo"]
+
+[resource]
+script = ExtResource("1_e5eqo")
+enabled = false
+label = "Trajectory"
+button = 1
+metadata/_custom_type_script = "uid://bmp2d6enkshks"

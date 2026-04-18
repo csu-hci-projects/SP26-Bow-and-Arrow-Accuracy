@@ -13,6 +13,7 @@ extends Node3D
 @export var bow_arrow: Node3D
 
 signal set_trajectory(launch_position: Vector3, launch_velocity: Vector3)
+signal enable_trajectory(enabled: bool)
 
 func _process(delta: float) -> void:
 	if bow_string.target:
@@ -47,3 +48,8 @@ func _on_string_release(power: float) -> void:
 	pivot_top2.rotation.x = 0
 	pivot_bottom1.rotation.x = 0
 	pivot_bottom2.rotation.x = 0
+
+
+func _on_bow_settings_button_toggled(item: BowSettingItem) -> void:
+	if item.label == "Trajectory":
+		enable_trajectory.emit(item.enabled)

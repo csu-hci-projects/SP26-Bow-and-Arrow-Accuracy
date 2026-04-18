@@ -1,8 +1,9 @@
-@tool
 extends MeshInstance3D
 
 ## Trajectory arc tube mesh.
 ## Drop this node where the bow string lives; call fire() or set launch params.
+
+@export var enabled: bool = true
 
 @export var radius       : float   = 0.03
 @export var rings        : int     = 32    # segments along the arc
@@ -24,8 +25,7 @@ func update_trajectory(launch_position: Vector3, launch_velocity: Vector3) -> vo
 
 ## Hide the arc (arrow has landed / was fired).
 func hide_trajectory(power: float) -> void:
-	#visible = false
-	pass
+	visible = false
 
 # ── lifecycle ─────────────────────────────────────────────────────
 
@@ -33,6 +33,7 @@ func _ready() -> void:
 	# Pre-build mesh topology; vertices filled each update.
 	_init_mesh()
 	_update_vertices()
+	enable()
 
 # ── mesh construction ──────────────────────────────────────────────
 
@@ -69,6 +70,9 @@ func _init_mesh() -> void:
 	_arrays[Mesh.ARRAY_INDEX] = idxs
 
 func _rebuild() -> void:
+	if !enabled:
+		return
+	
 	if not is_inside_tree() or _launch_velocity.length_squared() < 0.001:
 		visible = false
 		return
@@ -80,7 +84,7 @@ func _rebuild() -> void:
 	mesh = _array_mesh
 
 
-func _update_vertices() -> void:
+func _update_vertices() -> void:	
 	var verts := _arrays[Mesh.ARRAY_VERTEX] as PackedVector3Array
 	var norms := _arrays[Mesh.ARRAY_NORMAL] as PackedVector3Array
 
@@ -148,3 +152,13 @@ func _stable_perpendicular(v: Vector3) -> Vector3:
 		return v.cross(Vector3.UP).normalized()
 	else:
 		return v.cross(Vector3.BACK).normalized()
+
+
+func enable():
+	if !enabled:
+		visible = false
+
+
+func _on_bow_enable_trajectory(_enabled: bool) -> void:
+	enabled = _enabled
+	enable()

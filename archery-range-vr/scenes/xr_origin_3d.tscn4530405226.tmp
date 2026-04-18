@@ -10,17 +10,16 @@
 [ext_resource type="Script" uid="uid://bmp2d6enkshks" path="res://scripts/BowSettingItem.gd" id="6_4hrip"]
 [ext_resource type="Resource" uid="uid://cn1nyijn116c1" path="res://settings/trajectory.tres" id="7_2ofhi"]
 [ext_resource type="Resource" uid="uid://dixxs08rl1s30" path="res://settings/right_handed.tres" id="8_xllm5"]
-[ext_resource type="Script" uid="uid://b72opteca1ao4" path="res://scripts/HandManager.gd" id="11_2ofhi"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_g4cwv"]
-size = Vector2(2.25, 0.55)
+size = Vector2(2.05, 0.55)
 orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hg5dl"]
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dd1ma"]
-size = Vector2(2.2, 0.5)
+size = Vector2(2, 0.5)
 orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4hrip"]
@@ -42,6 +41,7 @@ show_when_tracked = true
 [node name="Bow" parent="LeftHand" unique_id=1409793744 instance=ExtResource("3_0t3sa")]
 
 [node name="TestFire" type="Node3D" parent="LeftHand" unique_id=338630156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0.2)
 script = ExtResource("4_j2fxx")
 enabled = false
 start_position = Vector3(0, 0, 0.2)
@@ -55,7 +55,7 @@ label_parent = NodePath("MeshInstance3D")
 metadata/_custom_type_script = "uid://drbnpanwky1vo"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LeftHand/BowSettings" unique_id=1631510290]
-transform = Transform3D(0.14839885, 0.004884651, -0.021305282, 1.2395107e-10, 0.14620657, 0.033520687, 0.021858059, -0.033162884, 0.14464593, 0.23184827, 0, 0.025417179)
+transform = Transform3D(0.14839885, 0.004884651, -0.021305282, 1.2395107e-10, 0.14620657, 0.033520687, 0.021858059, -0.033162884, 0.14464593, 0.21913236, 0, 0.025417179)
 mesh = SubResource("PlaneMesh_g4cwv")
 surface_material_override/0 = SubResource("StandardMaterial3D_hg5dl")
 
@@ -65,10 +65,10 @@ mesh = SubResource("PlaneMesh_dd1ma")
 surface_material_override/0 = SubResource("StandardMaterial3D_4hrip")
 
 [node name="Label3D" type="Label3D" parent="LeftHand/BowSettings/MeshInstance3D/MeshInstance3D" unique_id=108935645]
-transform = Transform3D(0.99999994, 3.7252903e-09, 0, -3.7252903e-09, 0.9999999, 0, -1.4901161e-08, 1.4901161e-08, 0.9999999, -1.0655003, -0.0037359595, 0.026294708)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.952, 0, 0.01)
 double_sided = false
 text = "Trajectory: Enabled
-Right Handed: Disabled"
+Test: Disabled"
 outline_size = 10
 horizontal_alignment = 0
 uppercase = true
@@ -83,12 +83,4 @@ show_when_tracked = true
 [node name="FunctionPull" parent="RightHand" unique_id=314817416 instance=ExtResource("5_j2fxx")]
 grab_distance = 0.2
 
-[node name="HandManager" type="Node" parent="." unique_id=96688183 node_paths=PackedStringArray("right_hand_parent", "left_hand_parent", "right_physics_hand", "left_physics_hand")]
-script = ExtResource("11_2ofhi")
-right_hand_parent = NodePath("../RightHand")
-left_hand_parent = NodePath("../LeftHand")
-right_physics_hand = NodePath("../RightHand/RightPhysicsHand")
-left_physics_hand = NodePath("../LeftHand/LeftPhysicsHand")
-
 [connection signal="button_toggled" from="LeftHand/BowSettings" to="LeftHand/Bow" method="_on_bow_settings_button_toggled"]
-[connection signal="button_toggled" from="LeftHand/BowSettings" to="HandManager" method="_on_bow_settings_button_toggled"]
