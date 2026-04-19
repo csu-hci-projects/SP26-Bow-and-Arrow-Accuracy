@@ -1,16 +1,25 @@
 extends Node3D
 
+@export_group("Physics")
 @export var arrow: PackedScene
 @export var max_velocity: float = 10
 
+@export_group("Pivots")
 @export var pivot_strength: float = 1
 @export var pivot_top1: Node3D
 @export var pivot_top2: Node3D
 @export var pivot_bottom1: Node3D
 @export var pivot_bottom2: Node3D
 
+@export_group("References")
 @export var bow_string: BowString
 @export var bow_arrow: Node3D
+
+@export_group("Audio")
+@export var audio_source: AudioStreamPlayer3D
+@export var pull_audio: AudioStream
+@export var release_audio: AudioStream
+var has_been_pulled = false
 
 signal set_trajectory(launch_position: Vector3, launch_velocity: Vector3)
 signal enable_trajectory(enabled: bool)
@@ -31,6 +40,11 @@ func shoot(power: float):
 
 
 func _on_string_pull(distance: float, power: float) -> void:
+	if !has_been_pulled:
+		audio_source.stream = pull_audio
+		audio_source.play()
+		has_been_pulled = true
+	
 	var bend_angle = distance * pivot_strength
 	pivot_top1.rotation.x = bend_angle
 	pivot_top2.rotation.x = bend_angle
@@ -42,6 +56,10 @@ func _on_string_pull(distance: float, power: float) -> void:
 
 
 func _on_string_release(power: float) -> void:
+	audio_source.stream = release_audio
+	audio_source.play()
+	has_been_pulled = false
+	
 	shoot(power * max_velocity)
 	
 	pivot_top1.rotation.x = 0

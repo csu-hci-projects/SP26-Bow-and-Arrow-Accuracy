@@ -17,6 +17,7 @@ size = Vector2(2.25, 0.55)
 orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hg5dl"]
+shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dd1ma"]
@@ -24,7 +25,8 @@ size = Vector2(2.2, 0.5)
 orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4hrip"]
-albedo_color = Color(0.52156866, 0.78431374, 1, 0.6313726)
+shading_mode = 0
+albedo_color = Color(0, 0.39152482, 0.66421413, 1)
 
 [node name="Player" type="XROrigin3D" unique_id=95447385]
 
@@ -43,9 +45,9 @@ show_when_tracked = true
 
 [node name="TestFire" type="Node3D" parent="LeftHand" unique_id=338630156]
 script = ExtResource("4_j2fxx")
-enabled = false
 start_position = Vector3(0, 0, 0.2)
 end_position = Vector3(0, -0.4, 1.2)
+pull_speed = 0.2
 
 [node name="BowSettings" type="Node3D" parent="LeftHand" unique_id=546825745 node_paths=PackedStringArray("label", "label_parent")]
 script = ExtResource("5_g4cwv")

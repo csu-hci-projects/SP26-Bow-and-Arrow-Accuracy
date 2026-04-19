@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://b27shn4y6ypn8" path="res://scripts/BowString.gd" id="1_vt0lb"]
 [ext_resource type="PackedScene" uid="uid://cxl1juoutkjjv" path="res://scenes/arrow.tscn" id="2_rivji"]
 [ext_resource type="Script" uid="uid://cjo67xnbw1v3v" path="res://scripts/Trajectory.gd" id="4_atxj4"]
+[ext_resource type="AudioStream" uid="uid://c1kbr5rhlmdxs" path="res://audio/bow_release.wav" id="4_uma3s"]
+[ext_resource type="AudioStream" uid="uid://bcoxu0qc0r5dj" path="res://audio/bow_pull.wav" id="5_oxltw"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_2of8d"]
 top_radius = 0.03
@@ -20,7 +22,7 @@ size = Vector3(0.05, 0.4, 0.03)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prjx1"]
 albedo_color = Color(0.16062862, 0.16062862, 0.16062862, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_atxj4"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_uma3s"]
 _surfaces = [{
 "aabb": AABB(-0.01, -0.9071497, -0.010908639, 0.02, 1.8101739, 0.021573614),
 "attribute_data": PackedByteArray("AAAAAAAAAAAAAIA+AAAAAAAAAD8AAAAAAABAPwAAAAAAAAAAAAAAPwAAgD4AAAA/AAAAPwAAAD8AAEA/AAAAPwAAAAAAAIA/AACAPgAAgD8AAAA/AACAPwAAQD8AAIA/"),
@@ -45,7 +47,7 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(0.85490197, 0.85490197, 0, 0.73333335)
 
-[node name="Bow" type="Node3D" unique_id=1409793744 node_paths=PackedStringArray("pivot_top1", "pivot_top2", "pivot_bottom1", "pivot_bottom2", "bow_string", "bow_arrow")]
+[node name="Bow" type="Node3D" unique_id=1409793744 node_paths=PackedStringArray("pivot_top1", "pivot_top2", "pivot_bottom1", "pivot_bottom2", "bow_string", "bow_arrow", "audio_source")]
 script = ExtResource("1_prjx1")
 arrow = ExtResource("2_rivji")
 max_velocity = 150.0
@@ -56,6 +58,9 @@ pivot_bottom1 = NodePath("handle/bottom_pivot")
 pivot_bottom2 = NodePath("handle/bottom_pivot/arm_bottom/bottom_pivot2")
 bow_string = NodePath("string")
 bow_arrow = NodePath("arrow_pivot")
+audio_source = NodePath("AudioStreamPlayer3D")
+pull_audio = ExtResource("5_oxltw")
+release_audio = ExtResource("4_uma3s")
 
 [node name="handle" type="MeshInstance3D" parent="." unique_id=835912174]
 mesh = SubResource("CylinderMesh_2of8d")
@@ -109,7 +114,7 @@ bottom_tip = NodePath("../handle/bottom_pivot/arm_bottom/bottom_pivot2/arm_botto
 max_pull = 0.8
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="string" unique_id=789673664]
-mesh = SubResource("ArrayMesh_atxj4")
+mesh = SubResource("ArrayMesh_uma3s")
 surface_material_override/0 = SubResource("StandardMaterial3D_rivji")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="string" unique_id=214696403]
@@ -129,6 +134,9 @@ script = ExtResource("4_atxj4")
 rings = 64
 sides = 4
 max_distance = 100.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1098203452]
+stream = ExtResource("5_oxltw")
 
 [connection signal="enable_trajectory" from="." to="trajectory" method="_on_bow_enable_trajectory"]
 [connection signal="set_trajectory" from="." to="trajectory" method="update_trajectory"]

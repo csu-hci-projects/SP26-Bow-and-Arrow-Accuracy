@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource("1_e5eqo")
-enabled = false
 label = "Trajectory"
 button = 1
 metadata/_custom_type_script = "uid://bmp2d6enkshks"

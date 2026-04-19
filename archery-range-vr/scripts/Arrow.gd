@@ -4,6 +4,9 @@ extends RigidBody3D
 @export var visuals: Node3D
 @export var collision: Node3D
 
+@export var audio_source: AudioStreamPlayer3D
+@export var hit_audio: Array[AudioStream]
+
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
@@ -17,5 +20,10 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if monitoring:
-		monitoring = false
-		freeze = true
+		on_hit(1)
+
+func on_hit(hit_sound: int = 0):
+	audio_source.stream = hit_audio[hit_sound]
+	audio_source.play()
+	monitoring = false
+	freeze = true

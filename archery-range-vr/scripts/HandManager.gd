@@ -6,6 +6,8 @@ extends Node
 @export var right_physics_hand: XRToolsPhysicsHand
 @export var left_physics_hand: XRToolsPhysicsHand
 
+var default_hand = true
+
 func swap_hands():
 	var right_children = right_hand_parent.get_children().filter(func(n): return n != right_physics_hand)
 	var left_children = left_hand_parent.get_children().filter(func(n): return n != left_physics_hand)
@@ -31,4 +33,6 @@ func swap_hands():
 
 func _on_bow_settings_button_toggled(item: BowSettingItem) -> void:
 	if item.label == "Right Handed":
-		swap_hands()
+		if item.enabled != default_hand:
+			swap_hands()
+			default_hand = item.enabled

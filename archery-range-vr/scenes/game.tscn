@@ -5,6 +5,10 @@
 [ext_resource type="Material" uid="uid://bvsrtjtawir2l" path="res://wall.tres" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="3_feb5d"]
 [ext_resource type="PackedScene" uid="uid://crwxgwh3q4bkc" path="res://scenes/target.tscn" id="5_iywne"]
+[ext_resource type="AudioStream" uid="uid://c5veahmf8p0q2" path="res://audio/point_3.wav" id="6_0tnpc"]
+[ext_resource type="AudioStream" uid="uid://0kcwa12tsd5r" path="res://audio/ambience.wav" id="6_p57ef"]
+[ext_resource type="AudioStream" uid="uid://b8osmboyul5sy" path="res://audio/point_2.wav" id="7_vtaks"]
+[ext_resource type="AudioStream" uid="uid://tle7ai0sq26k" path="res://audio/point_1.wav" id="8_kvpfn"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_80nbo"]
 size = Vector2(10, 50)
@@ -117,6 +121,10 @@ environment = SubResource("Environment_fc0e3")
 [node name="target" parent="targets" unique_id=223565187 instance=ExtResource("5_iywne")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5433877, 1.1850106, -12.207428)
 
+[node name="target4" parent="targets" unique_id=1993163314 instance=ExtResource("5_iywne")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5722201, 1.8092848, -7.7028475)
+points_audio = Array[AudioStream]([ExtResource("6_0tnpc"), ExtResource("7_vtaks"), ExtResource("8_kvpfn")])
+
 [node name="target2" parent="targets" unique_id=59771700 instance=ExtResource("5_iywne")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2377527, 1.1850106, -25.626907)
 
@@ -147,3 +155,7 @@ transform = Transform3D(0.9274582, -0.053817198, 0.37003374, -3.7252903e-09, 0.9
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport2" unique_id=1637560186]
 transform = Transform3D(0.93166304, -0.05381719, -0.35931534, 0.097863734, 0.9895887, 0.10553164, 0.349895, -0.13348389, 0.92723, 1.005135, 1.6660111, -22.710428)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1336993857]
+stream = ExtResource("6_p57ef")
+autoplay = true
