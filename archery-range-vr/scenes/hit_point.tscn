@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://cipqbf8we8a6b"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_di5yx"]
-radius = 0.1
-height = 0.2
+radius = 0.075
+height = 0.15
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ry41"]
 shading_mode = 0
-albedo_color = Color(0, 1, 0, 1)
+albedo_color = Color(1, 0, 0, 1)
 
 [node name="hit_point" type="MeshInstance3D" unique_id=1319334845]
 mesh = SubResource("SphereMesh_di5yx")

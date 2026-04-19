@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://0kcwa12tsd5r" path="res://audio/ambience.wav" id="6_p57ef"]
 [ext_resource type="AudioStream" uid="uid://b8osmboyul5sy" path="res://audio/point_2.wav" id="7_vtaks"]
 [ext_resource type="AudioStream" uid="uid://tle7ai0sq26k" path="res://audio/point_1.wav" id="8_kvpfn"]
+[ext_resource type="AudioStream" uid="uid://ove1usoojrc2" path="res://audio/bows at the park.wav" id="10_vtaks"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_80nbo"]
 size = Vector2(10, 50)
@@ -149,13 +150,21 @@ surface_material_override/0 = SubResource("StandardMaterial3D_p57ef")
 [node name="SubViewport" type="SubViewport" parent="." unique_id=821285863]
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=561237681]
-transform = Transform3D(0.9274582, -0.053817198, 0.37003374, -3.7252903e-09, 0.9895887, 0.14392443, -0.37392682, -0.13348389, 0.91780216, 1.5409952, 1.7421585, -36.63898)
+transform = Transform3D(0.9274582, -0.053817198, 0.37003374, -3.7252903e-09, 0.9895887, 0.14392443, -0.37392682, -0.13348389, 0.91780216, 0.7035104, 1.4461223, -38.496006)
 
 [node name="SubViewport2" type="SubViewport" parent="." unique_id=121930983]
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport2" unique_id=1637560186]
-transform = Transform3D(0.93166304, -0.05381719, -0.35931534, 0.097863734, 0.9895887, 0.10553164, 0.349895, -0.13348389, 0.92723, 1.005135, 1.6660111, -22.710428)
+transform = Transform3D(0.93166304, -0.05381719, -0.35931534, 0.097863734, 0.9895887, 0.10553164, 0.349895, -0.13348389, 0.92723, 1.3694717, 1.5159464, -23.969831)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1336993857]
+[node name="music" type="AudioStreamPlayer3D" parent="." unique_id=2132234442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.74992, -4.7683716e-07, -12.4116535)
+stream = ExtResource("10_vtaks")
+volume_db = -3.0
+autoplay = true
+bus = &"Music"
+
+[node name="ambience" type="AudioStreamPlayer3D" parent="." unique_id=580163861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.124153, 0, -1.3539133)
 stream = ExtResource("6_p57ef")
 autoplay = true
