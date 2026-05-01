@@ -45,6 +45,7 @@ show_when_tracked = true
 
 [node name="TestFire" type="Node3D" parent="LeftHand" unique_id=338630156]
 script = ExtResource("4_j2fxx")
+enabled = false
 start_position = Vector3(0, 0, 0.2)
 end_position = Vector3(0, -0.4, 1.2)
 pull_speed = 0.2
