@@ -24,7 +24,7 @@ var has_been_pulled = false
 signal set_trajectory(launch_position: Vector3, launch_velocity: Vector3)
 signal enable_trajectory(enabled: bool)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if bow_string.target:
 		bow_arrow.visible = true
 		bow_arrow.global_position = bow_string.target.global_position

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://y77d2rgtrp5n"]
 
 [ext_resource type="PackedScene" uid="uid://bnxwswvlhgk2s" path="res://scenes/xr_origin_3d.tscn" id="1_e2o6t"]
+[ext_resource type="Script" uid="uid://b3nfoct2glh4i" path="res://scripts/GameManager.gd" id="1_gee14"]
 [ext_resource type="Material" uid="uid://bmkktyqnlg8ma" path="res://floor.tres" id="2_lbhrr"]
 [ext_resource type="Material" uid="uid://bvsrtjtawir2l" path="res://wall.tres" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="3_feb5d"]
@@ -26,31 +27,22 @@ size = Vector3(0.5, 2, 8.5)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e2o6t"]
 
-[sub_resource type="Sky" id="Sky_feb5d"]
+[sub_resource type="Sky" id="Sky_u5sy4"]
 sky_material = SubResource("ProceduralSkyMaterial_e2o6t")
 
 [sub_resource type="Environment" id="Environment_fc0e3"]
 background_mode = 2
-sky = SubResource("Sky_feb5d")
+sky = SubResource("Sky_u5sy4")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_p57ef"]
-size = Vector2(1.1, 2.15)
+size = Vector2(2.15, 2.15)
 orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_iywne"]
-size = Vector2(1, 1)
 orientation = 2
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_p57ef"]
-viewport_path = NodePath("SubViewport2")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gee14"]
-resource_local_to_scene = true
-shading_mode = 0
-albedo_texture = SubResource("ViewportTexture_p57ef")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_iywne"]
 viewport_path = NodePath("SubViewport")
@@ -60,7 +52,9 @@ resource_local_to_scene = true
 shading_mode = 0
 albedo_texture = SubResource("ViewportTexture_iywne")
 
-[node name="Game" type="Node3D" unique_id=416378783]
+[node name="Game" type="Node3D" unique_id=416378783 node_paths=PackedStringArray("target")]
+script = ExtResource("1_gee14")
+target = NodePath("SubViewport/target")
 
 [node name="Player" parent="." unique_id=95447385 instance=ExtResource("1_e2o6t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -114,41 +108,23 @@ render_target_size_multiplier = 0.8
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1151358949]
 environment = SubResource("Environment_fc0e3")
 
-[node name="targets" type="Node3D" parent="." unique_id=704506797]
-
-[node name="target" parent="targets" unique_id=223565187 instance=ExtResource("5_iywne")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5433877, 1.1850106, -12.207428)
-
-[node name="target2" parent="targets" unique_id=59771700 instance=ExtResource("5_iywne")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2377527, 1.1850106, -25.626907)
-
-[node name="target3" parent="targets" unique_id=1569391443 instance=ExtResource("5_iywne")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24050736, 1.185011, -40.654926)
-
 [node name="TV" type="MeshInstance3D" parent="." unique_id=185198399]
-transform = Transform3D(0.8654226, 0, -0.50104254, 0, 1, 0, 0.50104254, 0, 0.8654226, 2.140409, 1.1117786, -2.4922578)
+transform = Transform3D(0.79018706, 0, -0.6128656, 0, 1, 0, 0.6128656, 0, 0.79018706, 2.6446826, 1.1117786, -2.055571)
 mesh = SubResource("PlaneMesh_p57ef")
 surface_material_override/0 = SubResource("StandardMaterial3D_u5sy4")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="TV" unique_id=2106047678]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525, 0.02)
-mesh = SubResource("PlaneMesh_iywne")
-surface_material_override/0 = SubResource("StandardMaterial3D_gee14")
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TV" unique_id=1915564431]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.525, 0.02)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.02)
 mesh = SubResource("PlaneMesh_iywne")
 surface_material_override/0 = SubResource("StandardMaterial3D_p57ef")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=821285863]
 
-[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=561237681]
-transform = Transform3D(0.9274582, -0.053817198, 0.37003374, -3.7252903e-09, 0.9895887, 0.14392443, -0.37392682, -0.13348389, 0.91780216, 0.7035104, 1.4461223, -38.496006)
+[node name="target" parent="SubViewport" unique_id=223565187 instance=ExtResource("5_iywne")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -12)
 
-[node name="SubViewport2" type="SubViewport" parent="." unique_id=121930983]
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport2" unique_id=1637560186]
-transform = Transform3D(0.93166304, -0.05381719, -0.35931534, 0.097863734, 0.9895887, 0.10553164, 0.349895, -0.13348389, 0.92723, 1.3694717, 1.5159464, -23.969831)
+[node name="Camera3D" type="Camera3D" parent="SubViewport/target" unique_id=561237681]
+transform = Transform3D(0.9274582, -0.053817198, 0.37003374, -3.7252903e-09, 0.9895887, 0.14392443, -0.37392682, -0.13348389, 0.91780216, 0.9006655, 0.2611122, 1.9433002)
 
 [node name="music" type="AudioStreamPlayer3D" parent="." unique_id=2132234442]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.74992, -4.7683716e-07, -12.4116535)

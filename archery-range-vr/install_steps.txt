@@ -1,0 +1,25 @@
+export all
+cd C:\Users\domo2\OneDrive\Documents\github\SP26-Bow-and-Arrow-Accuracy\archery-range-vr\builds
+adb install ArcheryRangeVR.apk
+
+adb pull /sdcard/Android/data/com.vr.archer/files/experiment_results.csv C:/Users/domo2/Desktop/
+adb shell ls -R /sdcard/Android/data/com.vr.archer/files/
+
+select settings scene:
+	trajectory on/off
+	right/left hand
+
+experiment scene:
+	x number of target distances
+	y number of shots per target
+
+output:
+	shot number
+	practice/test
+	target distance
+	trajectory on/off
+	right/left hand
+	
+	vertical accuracy
+	horizontal accuracy
+	aim time

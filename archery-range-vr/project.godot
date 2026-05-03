@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ArcheryRangeVR"
-run/main_scene="uid://y77d2rgtrp5n"
+run/main_scene="uid://c73uvf14jcu2r"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,7 @@ buses/default_bus_layout="uid://dkba2jxpyrfrn"
 
 XRToolsUserSettings="*uid://bqgb8i74tm0t"
 XRToolsRumbleManager="*uid://by853dk86g1qw"
+ExperimentManager="*uid://2c8tkq6e7dkt"
 
 [display]
 
@@ -42,6 +43,7 @@ enabled=PackedStringArray("res://addons/godot-xr-tools/plugin.cfg")
 
 rendering_device/driver.windows="d3d12"
 textures/vram_compression/import_etc2_astc=true
+vrs/mode=2
 
 [xr]
 

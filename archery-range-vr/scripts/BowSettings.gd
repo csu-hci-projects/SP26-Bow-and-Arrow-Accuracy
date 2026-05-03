@@ -1,3 +1,4 @@
+@tool
 extends XRToolsHandPalmOffset
 
 @export var settings: Array[BowSettingItem] = []
@@ -8,6 +9,7 @@ extends XRToolsHandPalmOffset
 var label_visibility_timer: float
 
 signal button_toggled(item: BowSettingItem)
+@export var take_user_input: bool = false
 
 const BUTTON_ACTION_MAP = {
 	BowSettingItem.BUTTON_NAME.AX: "ax_button",
@@ -29,12 +31,15 @@ func reconnect_controller():
 	_controller.button_pressed.connect(_on_button_pressed)
 
 func _process(_delta):
-	if label_visibility_timer <= 0:
+	if label_visibility_timer <= 0 or !take_user_input:
 		label_parent.visible = false
 	else:
 		label_visibility_timer -= _delta
 
 func _on_button_pressed(button: String):
+	if !take_user_input:
+		return
+	
 	for item in settings:
 		if BUTTON_ACTION_MAP[item.button] == button:
 			item.enabled = !item.enabled
@@ -42,6 +47,9 @@ func _on_button_pressed(button: String):
 			set_label()
 
 func set_label():
+	if !take_user_input:
+		return
+	
 	var lines: Array[String] = []
 	for item in settings:
 		var state = "Enabled" if item.enabled else "Disabled"

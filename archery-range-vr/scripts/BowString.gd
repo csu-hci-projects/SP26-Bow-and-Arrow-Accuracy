@@ -64,18 +64,18 @@ func _rebuild() -> void:
 func _update_vertices() -> void:
 	var top  := to_local(top_tip.global_position)
 	var bot  := to_local(bottom_tip.global_position)
-	var pull := Vector3.ZERO
+	var pull_pos := Vector3.ZERO
 	
 	if target:
-		pull = to_local(target.global_position)
+		pull_pos = to_local(target.global_position)
 	else:
-		pull = to_local((top_tip.global_position + bottom_tip.global_position) / 2)
+		pull_pos = to_local((top_tip.global_position + bottom_tip.global_position) / 2)
 
 	var verts := PackedVector3Array()
 	verts.resize(12)
-	_fill_ring(verts, 0, top,  (pull - top).normalized())
-	_fill_ring(verts, 4, pull, (bot  - top).normalized())
-	_fill_ring(verts, 8, bot,  (bot  - pull).normalized())
+	_fill_ring(verts, 0, top,  (pull_pos - top).normalized())
+	_fill_ring(verts, 4, pull_pos, (bot  - top).normalized())
+	_fill_ring(verts, 8, bot,  (bot  - pull_pos).normalized())
 
 	_arrays[Mesh.ARRAY_VERTEX] = verts
 	_array_mesh.clear_surfaces()

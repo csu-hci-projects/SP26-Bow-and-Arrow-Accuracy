@@ -24,7 +24,7 @@ func update_trajectory(launch_position: Vector3, launch_velocity: Vector3) -> vo
 	_rebuild()
 
 ## Hide the arc (arrow has landed / was fired).
-func hide_trajectory(power: float) -> void:
+func hide_trajectory(_power: float) -> void:
 	visible = false
 
 # ── lifecycle ─────────────────────────────────────────────────────

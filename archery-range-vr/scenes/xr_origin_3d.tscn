@@ -31,6 +31,7 @@ albedo_color = Color(0, 0.39152482, 0.66421413, 1)
 [node name="Player" type="XROrigin3D" unique_id=95447385]
 
 [node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=777078250]
+current = true
 
 [node name="LeftHand" type="XRController3D" parent="." unique_id=1809067601]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
