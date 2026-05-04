@@ -46,7 +46,6 @@ show_when_tracked = true
 
 [node name="TestFire" type="Node3D" parent="LeftHand" unique_id=338630156]
 script = ExtResource("4_j2fxx")
-enabled = false
 start_position = Vector3(0, 0, 0.2)
 end_position = Vector3(0, -0.4, 1.2)
 pull_speed = 0.2
@@ -60,6 +59,7 @@ metadata/_custom_type_script = "uid://drbnpanwky1vo"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LeftHand/BowSettings" unique_id=1631510290]
 transform = Transform3D(0.14839885, 0.004884651, -0.021305282, 1.2395107e-10, 0.14620657, 0.033520687, 0.021858059, -0.033162884, 0.14464593, 0.23184827, 0, 0.025417179)
+visible = false
 mesh = SubResource("PlaneMesh_g4cwv")
 surface_material_override/0 = SubResource("StandardMaterial3D_hg5dl")
 

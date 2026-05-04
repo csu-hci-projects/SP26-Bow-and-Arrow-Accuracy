@@ -2,8 +2,10 @@ export all
 cd C:\Users\domo2\OneDrive\Documents\github\SP26-Bow-and-Arrow-Accuracy\archery-range-vr\builds
 adb install ArcheryRangeVR.apk
 
-adb pull /sdcard/Android/data/com.vr.archer/files/experiment_results.csv C:/Users/domo2/Desktop/
-adb shell ls -R /sdcard/Android/data/com.vr.archer/files/
+adb shell run-as com.vr.archer ls files/
+for /f "tokens=*" %f in ('adb shell run-as com.vr.archer ls files/') do (
+	echo %f | findstr /b "experiment_results_" > nul && adb shell run-as com.vr.archer cat "files/%f" > "%f"
+)
 
 select settings scene:
 	trajectory on/off

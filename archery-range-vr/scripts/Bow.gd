@@ -44,6 +44,7 @@ func _on_string_pull(distance: float, power: float) -> void:
 		audio_source.stream = pull_audio
 		audio_source.play()
 		has_been_pulled = true
+		ExperimentManager.pull_start_time = Time.get_ticks_msec()
 	
 	var bend_angle = distance * pivot_strength
 	pivot_top1.rotation.x = bend_angle
@@ -59,6 +60,9 @@ func _on_string_release(power: float) -> void:
 	audio_source.stream = release_audio
 	audio_source.play()
 	has_been_pulled = false
+	
+	ExperimentManager.pull_time = Time.get_ticks_msec() - ExperimentManager.pull_start_time
+	ExperimentManager.pull_start_time = 0
 	
 	shoot(power * max_velocity)
 	

@@ -90,6 +90,8 @@ const DEFAULT_LAYER := 0b0000_0000_0101_0000_0000_0000_0000_0001
 ## Allow gamepad input to viewport
 @export var input_gamepad : bool = false
 
+@export var virtual_keyboard : Node
+
 # Rendering property group
 @export_group("Rendering")
 
@@ -144,6 +146,26 @@ func _ready():
 
 	# Update the render objects
 	_update_render()
+	
+	if virtual_keyboard:
+		if virtual_keyboard.has_signal("keyboard_character"):
+			virtual_keyboard.connect("keyboard_character", _on_virtual_keyboard_character)
+		if virtual_keyboard.has_signal("keyboard_backspace"):
+			virtual_keyboard.connect("keyboard_backspace", _on_virtual_keyboard_backspace)
+
+
+func _on_virtual_keyboard_character(character: String) -> void:
+	var event := InputEventKey.new()
+	event.unicode = character.unicode_at(0)
+	event.pressed = true
+	$Viewport.push_input(event)
+
+
+func _on_virtual_keyboard_backspace() -> void:
+	var event := InputEventKey.new()
+	event.keycode = KEY_BACKSPACE
+	event.pressed = true
+	$Viewport.push_input(event)
 
 
 # Provide custom property information

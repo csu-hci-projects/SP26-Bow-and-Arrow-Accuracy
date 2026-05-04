@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c6lglht2s08xm" path="res://scripts/Settings.gd" id="1_b5ayt"]
 
-[node name="settings" type="Control" unique_id=225337757 node_paths=PackedStringArray("trajectory_button", "hand_button", "practice_shots_label", "measured_shots_label")]
+[node name="settings" type="Control" unique_id=225337757 node_paths=PackedStringArray("trajectory_button", "hand_button", "practice_shots_label", "measured_shots_label", "name_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,8 +12,9 @@ grow_vertical = 2
 script = ExtResource("1_b5ayt")
 trajectory_button = NodePath("VBoxContainer/GridContainer/trajectory_button")
 hand_button = NodePath("VBoxContainer/GridContainer/hand_button")
-practice_shots_label = NodePath("VBoxContainer/GridContainer/Label5")
-measured_shots_label = NodePath("VBoxContainer/GridContainer/Label6")
+practice_shots_label = NodePath("VBoxContainer/GridContainer/practice")
+measured_shots_label = NodePath("VBoxContainer/GridContainer/measured")
+name_edit = NodePath("VBoxContainer/GridContainer/LineEdit")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=393494402]
 layout_mode = 1
@@ -33,6 +34,16 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/h_separation = 50
 columns = 2
+
+[node name="Label7" type="Label" parent="VBoxContainer/GridContainer" unique_id=747751685]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Name"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/GridContainer" unique_id=905038077]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+placeholder_text = "name"
 
 [node name="Label" type="Label" parent="VBoxContainer/GridContainer" unique_id=2105198200]
 layout_mode = 2
@@ -59,7 +70,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Practice Shots"
 
-[node name="Label5" type="Label" parent="VBoxContainer/GridContainer" unique_id=1417186860]
+[node name="practice" type="Label" parent="VBoxContainer/GridContainer" unique_id=1417186860]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "15"
@@ -69,7 +80,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Measured Shots"
 
-[node name="Label6" type="Label" parent="VBoxContainer/GridContainer" unique_id=1999383331]
+[node name="measured" type="Label" parent="VBoxContainer/GridContainer" unique_id=1999383331]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "15"

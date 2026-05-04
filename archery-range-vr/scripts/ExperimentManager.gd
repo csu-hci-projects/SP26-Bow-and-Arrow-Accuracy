@@ -1,5 +1,6 @@
 extends Node
 
+var subject_name: String = ""
 var using_trajectory: bool = true
 var trajectory_resource: BowSettingItem = load("res://settings/trajectory.tres")
 var using_right_hand: bool = true
@@ -13,10 +14,15 @@ var target_distances: Array[float] = [
 var shot_count_practice: int = 5
 var shot_count_measured: int = 5
 
+var settings_scene: PackedScene = preload("res://scenes/settings.tscn")
 var experiment_scene: PackedScene = preload("res://scenes/game.tscn")
 
 var current_shot_count: int = 0
 var current_distance: int = 0
+var pull_start_time: int = 0
+var pull_time: int = 0
+
+var is_practice: bool = true
 
 signal change_distance(distance: float)
 
@@ -32,33 +38,44 @@ func _start_experiment():
 	if experiment_scene:
 		get_tree().change_scene_to_packed(experiment_scene)
 
+func _end_experiment():
+	if experiment_scene:
+		get_tree().change_scene_to_packed(settings_scene)
+
 func _take_shot() -> int:
 	current_shot_count += 1
 	return current_shot_count
 
 func _on_hit(shot_id: int, distance: float, distance_normal: float, distance_x: float = 0, distance_y: float = 0):
-	current_shot_count += 1
-	
 	save_to_csv([
 		shot_id,
-		"practice",
+		"practice" if is_practice else "measured",
 		target_distances[current_distance],
-		("yes" if using_trajectory else "no"),
-		("right" if using_right_hand else "left"),
+		"yes" if using_trajectory else "no",
+		"right" if using_right_hand else "left",
 		distance,
 		distance_x,
 		distance_y,
-		0.0
+		pull_time
 	])
+	pull_time = 0
 	
 	if current_shot_count / shot_count_measured > current_distance:
 		current_distance += 1
 		if current_distance < target_distances.size():
 			change_distance.emit(target_distances[current_distance])
+		else:
+			if is_practice:
+				is_practice = false
+				current_shot_count = 0
+				current_distance = 0
+				change_distance.emit(target_distances[current_distance])
+			else:
+				_end_experiment()
 
 
 func save_to_csv(data_row: Array):
-	var file_path = "user://experiment_results.csv"
+	var file_path = "user://experiment_results_"+subject_name+".csv"
 	var file_exists = FileAccess.file_exists(file_path)
 	
 	var file = FileAccess.open(file_path, FileAccess.READ_WRITE if file_exists else FileAccess.WRITE)
