@@ -7,11 +7,14 @@ extends RigidBody3D
 @export var audio_source: AudioStreamPlayer3D
 @export var hit_audio: Array[AudioStream]
 
+@export var timeout: float = 5.0
+
 var shot_id: int = 0
 
 func _ready() -> void:
 	shot_id = (ExperimentManager._take_shot())
 	body_entered.connect(_on_body_entered)
+	_start_timeout()
 
 func _physics_process(_delta: float) -> void:
 	if monitoring:
@@ -32,3 +35,8 @@ func on_hit(hit_sound: int = 0, distance: float = 0, distance_normal: float = 0,
 	freeze = true
 	
 	ExperimentManager._on_hit(shot_id, distance, distance_normal, distance_x, distance_y)
+
+func _start_timeout() -> void:
+	await get_tree().create_timer(timeout).timeout
+	if monitoring:
+		on_hit(0, -1, -1, -1, -1)

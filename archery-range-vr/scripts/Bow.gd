@@ -33,6 +33,9 @@ func _process(_delta: float) -> void:
 		bow_arrow.visible = false
 
 func shoot(power: float):
+	if ExperimentManager.is_waiting or ExperimentManager.is_shooting:
+		return
+	
 	var arrow_instance := arrow.instantiate() as RigidBody3D
 	get_tree().root.add_child(arrow_instance)
 	arrow_instance.global_transform = bow_arrow.global_transform
@@ -61,10 +64,10 @@ func _on_string_release(power: float) -> void:
 	audio_source.play()
 	has_been_pulled = false
 	
-	ExperimentManager.pull_time = Time.get_ticks_msec() - ExperimentManager.pull_start_time
-	ExperimentManager.pull_start_time = 0
-	
 	shoot(power * max_velocity)
+	
+	if !ExperimentManager.is_waiting and !ExperimentManager.is_shooting:
+		ExperimentManager.released()
 	
 	pivot_top1.rotation.x = 0
 	pivot_top2.rotation.x = 0

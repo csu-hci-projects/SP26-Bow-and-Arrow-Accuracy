@@ -35,7 +35,7 @@ collision_mask = 3
 script = ExtResource("1_b37e2")
 hit_point = ExtResource("2_b5a2r")
 audio_source = NodePath("AudioStreamPlayer3D")
-points_audio = Array[AudioStream]([ExtResource("3_2x57b"), ExtResource("4_bu876"), ExtResource("5_oqed2")])
+points_audio = Array[AudioStream]([ExtResource("5_oqed2"), ExtResource("4_bu876"), ExtResource("3_2x57b")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=380185213]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)

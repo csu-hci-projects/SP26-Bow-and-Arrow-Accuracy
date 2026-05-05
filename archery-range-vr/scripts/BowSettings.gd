@@ -21,6 +21,7 @@ func _ready():
 	for item in settings:
 		button_toggled.emit(item)
 	set_label()
+	ExperimentManager.setting_changed.connect(button_toggled.emit)
 
 func reconnect_controller():
 	if _controller and _controller.button_pressed.is_connected(_on_button_pressed):
