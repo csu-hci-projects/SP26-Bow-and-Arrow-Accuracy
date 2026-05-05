@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://y77d2rgtrp5n"]
+
+[ext_resource type="PackedScene" uid="uid://bnxwswvlhgk2s" path="res://scenes/xr_origin_3d.tscn" id="1_e2o6t"]
+[ext_resource type="Script" uid="uid://b3nfoct2glh4i" path="res://scripts/GameManager.gd" id="1_gee14"]
+[ext_resource type="Material" uid="uid://bmkktyqnlg8ma" path="res://floor.tres" id="2_lbhrr"]
+[ext_resource type="Material" uid="uid://bvsrtjtawir2l" path="res://wall.tres" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="3_feb5d"]
+[ext_resource type="PackedScene" uid="uid://crwxgwh3q4bkc" path="res://scenes/target.tscn" id="5_iywne"]
+[ext_resource type="AudioStream" uid="uid://0kcwa12tsd5r" path="res://audio/ambience.wav" id="6_p57ef"]
+[ext_resource type="AudioStream" uid="uid://ove1usoojrc2" path="res://audio/bows at the park.wav" id="10_vtaks"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_80nbo"]
+size = Vector2(10, 50)
+orientation = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lbhrr"]
+size = Vector3(10, 1, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_feb5d"]
+size = Vector3(3, 2, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yqjtg"]
+size = Vector3(10, 2, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lnu2h"]
+size = Vector3(0.5, 2, 8.5)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e2o6t"]
+
+[sub_resource type="Sky" id="Sky_u5sy4"]
+sky_material = SubResource("ProceduralSkyMaterial_e2o6t")
+
+[sub_resource type="Environment" id="Environment_fc0e3"]
+background_mode = 2
+sky = SubResource("Sky_u5sy4")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_p57ef"]
+size = Vector2(2.15, 2.15)
+orientation = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5sy4"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_iywne"]
+orientation = 2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_iywne"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p57ef"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_iywne")
+
+[node name="Game" type="Node3D" unique_id=416378783 node_paths=PackedStringArray("target")]
+script = ExtResource("1_gee14")
+target = NodePath("SubViewport/target")
+
+[node name="Player" parent="." unique_id=95447385 instance=ExtResource("1_e2o6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=839200616]
+transform = Transform3D(-0.5474172, 0.74541533, -0.38038182, 0, 0.45453474, 0.8907291, 0.83685994, 0.48760045, -0.24882014, 0, 0, 0)
+shadow_enabled = true
+
+[node name="environment" type="Node3D" parent="." unique_id=1308102294]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="environment" unique_id=353133200]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="floor" type="MeshInstance3D" parent="environment/StaticBody3D" unique_id=453275474]
+mesh = SubResource("QuadMesh_80nbo")
+surface_material_override/0 = ExtResource("2_lbhrr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="environment/StaticBody3D" unique_id=539143863]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+shape = SubResource("BoxShape3D_lbhrr")
+
+[node name="wall" type="MeshInstance3D" parent="environment" unique_id=1654302514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1, -3)
+mesh = SubResource("BoxMesh_feb5d")
+surface_material_override/0 = ExtResource("2_lnu2h")
+
+[node name="wall2" type="MeshInstance3D" parent="environment" unique_id=2028015014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1, -3)
+mesh = SubResource("BoxMesh_feb5d")
+surface_material_override/0 = ExtResource("2_lnu2h")
+
+[node name="wall3" type="MeshInstance3D" parent="environment" unique_id=27781152]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 5)
+mesh = SubResource("BoxMesh_yqjtg")
+surface_material_override/0 = ExtResource("2_lnu2h")
+
+[node name="wall4" type="MeshInstance3D" parent="environment" unique_id=1093710877]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 1)
+mesh = SubResource("BoxMesh_lnu2h")
+surface_material_override/0 = ExtResource("2_lnu2h")
+
+[node name="wall5" type="MeshInstance3D" parent="environment" unique_id=1308109027]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 1)
+mesh = SubResource("BoxMesh_lnu2h")
+surface_material_override/0 = ExtResource("2_lnu2h")
+
+[node name="StartXR" parent="." unique_id=423195982 instance=ExtResource("3_feb5d")]
+render_target_size_multiplier = 0.8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1151358949]
+environment = SubResource("Environment_fc0e3")
+
+[node name="TV" type="MeshInstance3D" parent="." unique_id=185198399]
+transform = Transform3D(0.79018706, 0, -0.6128656, 0, 1, 0, 0.6128656, 0, 0.79018706, 2.6446826, 1.1117786, -2.055571)
+mesh = SubResource("PlaneMesh_p57ef")
+surface_material_override/0 = SubResource("StandardMaterial3D_u5sy4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TV" unique_id=1915564431]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.02)
+mesh = SubResource("PlaneMesh_iywne")
+surface_material_override/0 = SubResource("StandardMaterial3D_p57ef")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=821285863]
+
+[node name="target" parent="SubViewport" unique_id=223565187 instance=ExtResource("5_iywne")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -12)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/target" unique_id=561237681]
+transform = Transform3D(0.9274582, -0.053817198, 0.37003374, -3.7252903e-09, 0.9895887, 0.14392443, -0.37392682, -0.13348389, 0.91780216, 0.9006655, 0.2611122, 1.9433002)
+
+[node name="music" type="AudioStreamPlayer3D" parent="." unique_id=2132234442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.74992, -4.7683716e-07, -12.4116535)
+stream = ExtResource("10_vtaks")
+volume_db = -3.0
+autoplay = true
+bus = &"Music"
+
+[node name="ambience" type="AudioStreamPlayer3D" parent="." unique_id=580163861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.124153, 0, -1.3539133)
+stream = ExtResource("6_p57ef")
+autoplay = true

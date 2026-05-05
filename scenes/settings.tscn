@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://c73uvf14jcu2r"]
+
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="1_5p8wc"]
+[ext_resource type="Material" uid="uid://bmkktyqnlg8ma" path="res://floor.tres" id="2_6wm04"]
+[ext_resource type="Material" uid="uid://bvsrtjtawir2l" path="res://wall.tres" id="3_f4mfi"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="4_f4mfi"]
+[ext_resource type="PackedScene" uid="uid://br8s5gmei8p5m" path="res://scenes/settings_ui.tscn" id="5_es4n0"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="6_gis3k"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_es4n0"]
+size = Vector2(10, 10)
+orientation = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gis3k"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_83j8s"]
+size = Vector3(10, 4, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gjs24"]
+size = Vector3(0.5, 4, 10)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6wm04"]
+
+[sub_resource type="Sky" id="Sky_feb5d"]
+sky_material = SubResource("ProceduralSkyMaterial_6wm04")
+
+[sub_resource type="Environment" id="Environment_f4mfi"]
+background_mode = 2
+sky = SubResource("Sky_feb5d")
+
+[sub_resource type="QuadMesh" id="QuadMesh_gis3k"]
+resource_local_to_scene = true
+size = Vector2(3, 3)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_83j8s"]
+viewport_path = NodePath("Viewport2Din3D/Viewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gjs24"]
+transparency = 1
+cull_mode = 2
+albedo_texture = SubResource("ViewportTexture_83j8s")
+texture_filter = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_am25x"]
+resource_local_to_scene = true
+size = Vector3(3, 3, 0.02)
+
+[sub_resource type="QuadMesh" id="QuadMesh_83j8s"]
+resource_local_to_scene = true
+size = Vector2(3.1, 3.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_am25x"]
+albedo_color = Color(0.25882354, 0.34117648, 0.78039217, 1)
+
+[node name="Settings" type="Node3D" unique_id=592996033]
+
+[node name="Player" type="XROrigin3D" parent="." unique_id=95447385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="Player" unique_id=777078250]
+current = true
+
+[node name="LeftHand" type="XRController3D" parent="Player" unique_id=1809067601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
+tracker = &"left_hand"
+show_when_tracked = true
+
+[node name="FunctionPointer" parent="Player/LeftHand" unique_id=1131829811 instance=ExtResource("1_5p8wc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, 0.05, -0.1)
+
+[node name="RightHand" type="XRController3D" parent="Player" unique_id=1583282118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
+tracker = &"right_hand"
+show_when_tracked = true
+
+[node name="FunctionPointer" parent="Player/RightHand" unique_id=2133317193 instance=ExtResource("1_5p8wc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
+
+[node name="environment" type="Node3D" parent="." unique_id=1882542889]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="environment" unique_id=1138990123]
+
+[node name="floor" type="MeshInstance3D" parent="environment/StaticBody3D" unique_id=1874312297]
+mesh = SubResource("QuadMesh_es4n0")
+surface_material_override/0 = ExtResource("2_6wm04")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="environment/StaticBody3D" unique_id=1684578302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+shape = SubResource("BoxShape3D_gis3k")
+
+[node name="wall3" type="MeshInstance3D" parent="environment" unique_id=1576957877]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
+mesh = SubResource("BoxMesh_83j8s")
+surface_material_override/0 = ExtResource("3_f4mfi")
+
+[node name="wall6" type="MeshInstance3D" parent="environment" unique_id=1121026494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5)
+mesh = SubResource("BoxMesh_83j8s")
+surface_material_override/0 = ExtResource("3_f4mfi")
+
+[node name="wall4" type="MeshInstance3D" parent="environment" unique_id=1645719881]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+mesh = SubResource("BoxMesh_gjs24")
+surface_material_override/0 = ExtResource("3_f4mfi")
+
+[node name="wall5" type="MeshInstance3D" parent="environment" unique_id=1966595182]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 0)
+mesh = SubResource("BoxMesh_gjs24")
+surface_material_override/0 = ExtResource("3_f4mfi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=223230209]
+transform = Transform3D(0.88338983, 0.41743046, -0.21301281, 2.494037e-08, 0.45453468, 0.890729, 0.46863914, -0.78686064, 0.4015312, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2117888687]
+environment = SubResource("Environment_f4mfi")
+
+[node name="Viewport2Din3D" parent="." unique_id=923684313 instance=ExtResource("4_f4mfi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4.5733223)
+screen_size = Vector2(3, 3)
+scene = ExtResource("5_es4n0")
+viewport_size = Vector2(500, 500)
+transparent = 1
+scene_properties_keys = PackedStringArray("Settings.gd")
+
+[node name="Viewport" parent="Viewport2Din3D" index="0"]
+size = Vector2i(500, 500)
+
+[node name="Screen" parent="Viewport2Din3D" index="1"]
+mesh = SubResource("QuadMesh_gis3k")
+surface_material_override/0 = SubResource("StandardMaterial3D_gjs24")
+
+[node name="StaticBody3D" parent="Viewport2Din3D" index="2"]
+screen_size = Vector2(3, 3)
+viewport_size = Vector2(500, 500)
+
+[node name="CollisionShape3D" parent="Viewport2Din3D/StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_am25x")
+
+[node name="Screen2" type="MeshInstance3D" parent="Viewport2Din3D" unique_id=1976371401]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.07759142)
+mesh = SubResource("QuadMesh_83j8s")
+surface_material_override/0 = SubResource("StandardMaterial3D_am25x")
+
+[node name="StartXR" parent="." unique_id=673390924 instance=ExtResource("6_gis3k")]
+render_target_size_multiplier = 0.8
+
+[editable path="Viewport2Din3D"]

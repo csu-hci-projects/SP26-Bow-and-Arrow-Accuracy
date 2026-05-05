@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BowSettingItem" format=3 uid="uid://dixxs08rl1s30"]
+
+[ext_resource type="Script" uid="uid://bmp2d6enkshks" path="res://scripts/BowSettingItem.gd" id="1_l72ln"]
+
+[resource]
+script = ExtResource("1_l72ln")
+label = "Right Handed"
+metadata/_custom_type_script = "uid://bmp2d6enkshks"
