@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dm0gxqi7g051p"]
+
+[ext_resource type="Script" uid="uid://dlt8ws7voecs8" path="res://scripts/FunctionPull.gd" id="1_c4ymk"]
+
+[node name="FunctionPull" type="Node3D" unique_id=314817416]
+script = ExtResource("1_c4ymk")

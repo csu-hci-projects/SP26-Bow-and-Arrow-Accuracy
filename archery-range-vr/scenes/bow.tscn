@@ -1,0 +1,194 @@
+[gd_scene format=4 uid="uid://bq8dx8nmmgpvl"]
+
+[ext_resource type="Script" uid="uid://cws0xsaewmwyg" path="res://scripts/Bow.gd" id="1_prjx1"]
+[ext_resource type="Script" uid="uid://b27shn4y6ypn8" path="res://scripts/BowString.gd" id="1_vt0lb"]
+[ext_resource type="PackedScene" uid="uid://cxl1juoutkjjv" path="res://scenes/arrow.tscn" id="2_rivji"]
+[ext_resource type="Script" uid="uid://cjo67xnbw1v3v" path="res://scripts/Trajectory.gd" id="4_atxj4"]
+[ext_resource type="AudioStream" uid="uid://c1kbr5rhlmdxs" path="res://audio/bow_release.wav" id="4_uma3s"]
+[ext_resource type="AudioStream" uid="uid://bcoxu0qc0r5dj" path="res://audio/bow_pull.wav" id="5_oxltw"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2of8d"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.3
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vt0lb"]
+albedo_color = Color(0.6027287, 0.369465, 0.23655248, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_60xqc"]
+size = Vector3(0.05, 0.4, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_prjx1"]
+albedo_color = Color(0.16062862, 0.16062862, 0.16062862, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_uma3s"]
+_surfaces = [{
+"aabb": AABB(-0.01, -0.9071497, -0.010908639, 0.02, 1.8101739, 0.021573614),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAIA+AAAAAAAAAD8AAAAAAABAPwAAAAAAAAAAAAAAPwAAgD4AAAA/AAAAPwAAAD8AAEA/AAAAPwAAAAAAAIA/AACAPgAAgD8AAAA/AACAPwAAQD8AAIA/"),
+"format": 34359742481,
+"index_count": 48,
+"index_data": PackedByteArray("AAABAAQAAQAFAAQAAQACAAUAAgAGAAUAAgADAAYAAwAHAAYAAwAAAAcAAAAEAAcABAAFAAgABQAJAAgABQAGAAkABgAKAAkABgAHAAoABwALAAoABwAEAAsABAAIAAsA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("CtcjvAYsZz8AMm66AAAAAJgsZz/m8xQ8CtcjPAYsZz8AMm66AAAAAHQrZz8mujK8CtcjvAAvB7sAgP+4AAAAACedBrsG2CE8CtcjPAAvB7sAgP+4AAAAANnAB7sG1iW8CtcjvGQ6aL8AUi46AAAAANI5aL8mvC48CtcjPGQ6aL8AUi46AAAAAPY6aL/m8Ri8")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rivji"]
+albedo_color = Color(0.8101393, 0.59428984, 0.4663679, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vt0lb"]
+height = 1.0
+radius = 0.04
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wyax8"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 1.2
+radial_segments = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atxj4"]
+albedo_color = Color(0.53812957, 0.29169464, 0.16888821, 1)
+emission_enabled = true
+emission = Color(0.5372549, 0.2901961, 0.16862746, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_wyax8"]
+size = Vector3(0.005, 0.1, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_umosx"]
+emission_enabled = true
+emission = Color(0.9737659, 0.6715565, 0.4693216, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_umosx"]
+top_radius = 0.02
+bottom_radius = 0.005
+height = 0.1
+radial_segments = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23jat"]
+albedo_color = Color(0.2015267, 0.20152655, 0.20152652, 1)
+emission_enabled = true
+emission = Color(0.2, 0.2, 0.2, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ji0pi"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.85490197, 0.85490197, 0, 0.73333335)
+
+[node name="Bow" type="Node3D" unique_id=1409793744 node_paths=PackedStringArray("pivot_top1", "pivot_top2", "pivot_bottom1", "pivot_bottom2", "bow_string", "bow_arrow", "audio_source")]
+script = ExtResource("1_prjx1")
+arrow = ExtResource("2_rivji")
+max_velocity = 150.0
+pivot_strength = 0.5
+pivot_top1 = NodePath("handle/top_pivot")
+pivot_top2 = NodePath("handle/top_pivot/arm_top/top_pivot2")
+pivot_bottom1 = NodePath("handle/bottom_pivot")
+pivot_bottom2 = NodePath("handle/bottom_pivot/arm_bottom/bottom_pivot2")
+bow_string = NodePath("string")
+bow_arrow = NodePath("arrow_pivot")
+audio_source = NodePath("AudioStreamPlayer3D")
+pull_audio = ExtResource("5_oxltw")
+release_audio = ExtResource("4_uma3s")
+
+[node name="handle" type="MeshInstance3D" parent="." unique_id=835912174]
+mesh = SubResource("CylinderMesh_2of8d")
+surface_material_override/0 = SubResource("StandardMaterial3D_vt0lb")
+
+[node name="top_pivot" type="Node3D" parent="handle" unique_id=614265774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14453462, 0.0007855296)
+
+[node name="arm_top" type="MeshInstance3D" parent="handle/top_pivot" unique_id=1878606321]
+transform = Transform3D(1, 0, 0, 0, 0.99026805, -0.1391731, 0, 0.1391731, 0.99026805, 0, 0.1989649, 0.024812102)
+mesh = SubResource("BoxMesh_60xqc")
+surface_material_override/0 = SubResource("StandardMaterial3D_prjx1")
+
+[node name="top_pivot2" type="Node3D" parent="handle/top_pivot/arm_top" unique_id=2075341445]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19284204, 0.0019158628)
+
+[node name="arm_top2" type="MeshInstance3D" parent="handle/top_pivot/arm_top/top_pivot2" unique_id=879437215]
+transform = Transform3D(1, 0, 0, 0, 0.99026835, -0.13917315, 0, 0.13917315, 0.99026835, 0, 0.20136636, 0.025985453)
+mesh = SubResource("BoxMesh_60xqc")
+surface_material_override/0 = SubResource("StandardMaterial3D_prjx1")
+
+[node name="tip" type="Node3D" parent="handle/top_pivot/arm_top/top_pivot2/arm_top2" unique_id=917221913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, 0)
+
+[node name="bottom_pivot" type="Node3D" parent="handle" unique_id=644615919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.145, 0.001)
+
+[node name="arm_bottom" type="MeshInstance3D" parent="handle/bottom_pivot" unique_id=759823996]
+transform = Transform3D(1, 0, 0, 0, 0.99026805, 0.1391731, 0, -0.1391731, 0.99026805, 0, -0.199, 0.025)
+mesh = SubResource("BoxMesh_60xqc")
+surface_material_override/0 = SubResource("StandardMaterial3D_prjx1")
+
+[node name="bottom_pivot2" type="Node3D" parent="handle/bottom_pivot/arm_bottom" unique_id=1144347681]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.193, 0.002)
+
+[node name="arm_bottom2" type="MeshInstance3D" parent="handle/bottom_pivot/arm_bottom/bottom_pivot2" unique_id=1150124785]
+transform = Transform3D(1, 0, 0, 0, 0.9902682, 0.13917312, 0, -0.13917312, 0.9902682, 0, -0.201, 0.026)
+mesh = SubResource("BoxMesh_60xqc")
+surface_material_override/0 = SubResource("StandardMaterial3D_prjx1")
+
+[node name="tip" type="Node3D" parent="handle/bottom_pivot/arm_bottom/bottom_pivot2/arm_bottom2" unique_id=1032163060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.184, 0)
+
+[node name="string" type="Area3D" parent="." unique_id=884979617 node_paths=PackedStringArray("mesh_instance", "top_tip", "bottom_tip")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15861401)
+collision_layer = 4
+script = ExtResource("1_vt0lb")
+mesh_instance = NodePath("MeshInstance3D")
+top_tip = NodePath("../handle/top_pivot/arm_top/top_pivot2/arm_top2/tip")
+bottom_tip = NodePath("../handle/bottom_pivot/arm_bottom/bottom_pivot2/arm_bottom2/tip")
+max_pull = 0.8
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="string" unique_id=789673664]
+mesh = SubResource("ArrayMesh_uma3s")
+surface_material_override/0 = SubResource("StandardMaterial3D_rivji")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="string" unique_id=214696403]
+shape = SubResource("CylinderShape3D_vt0lb")
+
+[node name="arrow_pivot" type="Node3D" parent="." unique_id=1088799102]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15947261)
+
+[node name="Arrow" type="Node3D" parent="arrow_pivot" unique_id=2044884519]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="arrow_pivot/Arrow" unique_id=1082691719]
+mesh = SubResource("CylinderMesh_wyax8")
+surface_material_override/0 = SubResource("StandardMaterial3D_atxj4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="arrow_pivot/Arrow/MeshInstance3D" unique_id=742467828]
+transform = Transform3D(0.70710677, -3.090862e-08, -0.70710677, 3.090862e-08, 1, -1.2802769e-08, 0.70710677, -1.2802769e-08, 0.70710677, 0, 0.5458105, -2.3858135e-08)
+mesh = SubResource("BoxMesh_wyax8")
+surface_material_override/0 = SubResource("StandardMaterial3D_umosx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="arrow_pivot/Arrow/MeshInstance3D" unique_id=1957377400]
+transform = Transform3D(0.7071067, 3.0908613e-08, 0.7071068, -3.090862e-08, 1, -1.2802772e-08, -0.7071068, -1.2802776e-08, 0.7071067, 0, 0.5458105, -2.3858135e-08)
+mesh = SubResource("BoxMesh_wyax8")
+surface_material_override/0 = SubResource("StandardMaterial3D_umosx")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="arrow_pivot/Arrow/MeshInstance3D" unique_id=690269538]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.64309114, 0)
+mesh = SubResource("CylinderMesh_umosx")
+surface_material_override/0 = SubResource("StandardMaterial3D_23jat")
+
+[node name="trajectory" type="MeshInstance3D" parent="." unique_id=790847703]
+material_override = SubResource("StandardMaterial3D_ji0pi")
+script = ExtResource("4_atxj4")
+rings = 64
+sides = 4
+max_distance = 100.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1098203452]
+stream = ExtResource("5_oxltw")
+
+[connection signal="enable_trajectory" from="." to="trajectory" method="_on_bow_enable_trajectory"]
+[connection signal="set_trajectory" from="." to="trajectory" method="update_trajectory"]
+[connection signal="pull" from="string" to="." method="_on_string_pull"]
+[connection signal="release" from="string" to="." method="_on_string_release"]
+[connection signal="release" from="string" to="trajectory" method="hide_trajectory"]
